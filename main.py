@@ -20,9 +20,7 @@ def score(list_with_cards):
  
  
 def blackjack():
-    all_cards = []
-    for number in range(1, 12):
-        all_cards.append(number)
+    all_cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
  
     user_cards = []
     user_cards.append(random.choice(all_cards))
@@ -44,7 +42,12 @@ def blackjack():
         if user_score > 21:
             user_score = score(user_cards)
         elif another_card == 'y':
-            user_cards.append(random.choice(all_cards))
+            new_card = random.choice(all_cards)
+            if new_card == 11:
+                new_card = int(input('WOW! You take Ace and you can choose count "11" or "1": '))
+                user_cards.append(new_card)
+            else:
+                user_cards.append(new_card)
             user_score = score(user_cards)
         elif another_card == 'n' :
             user_score = score(user_cards)
@@ -56,7 +59,16 @@ def blackjack():
     computer_score = score(computer_cards)
  
     while computer_score < 17:
-        computer_cards.append(random.choice(all_cards))
+        new_card = random.choice(all_cards)
+        if new_card == 11:
+            if computer_score + new_card > 21:
+                new_card = 1
+                computer_cards.append(new_card)
+            else:
+                new_card = 11
+                computer_cards.append(new_card)
+        else:
+            computer_cards.append(new_card)
         computer_score = score(computer_cards)
     
     print(logo)
